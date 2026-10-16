@@ -12,3 +12,5 @@ This workflow:
 Requires Microsoft Edge WebView2 Runtime on the Windows PC. Google may restrict embedded sign-in in webview windows.
 
 Google product icons: the app fetches official product favicons from Google-owned service domains on first display and caches them under %APPDATA%\\GAppsLauncher\\icons. Internet access is required the first time; if a favicon cannot load, a letter fallback is shown.
+
+Persistent login/session: WebView2 uses a dedicated user-data profile at %LOCALAPPDATA%\\GAppsLauncher\\WebView2Profile, intended to retain cookies between launches. Google may still require re-authentication or restrict embedded webview sign-in; this cannot be guaranteed by the launcher.
