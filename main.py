@@ -53,7 +53,25 @@ class Launcher:
   self.grid.bind("<Configure>",lambda e:self.can.configure(scrollregion=self.can.bbox("all")))
   self.wid=self.can.create_window((0,0),window=self.grid,anchor="nw"); self.can.configure(yscrollcommand=sb.set)
   self.can.pack(side="left",fill="both",expand=True); sb.pack(side="right",fill="y"); self.can.bind("<Configure>",lambda e:self.can.itemconfigure(self.wid,width=e.width))
+  # Enable mouse-wheel scrolling when the pointer is over the app list.
+  self.can.bind("<Enter>", self._bind_mousewheel)
+  self.can.bind("<Leave>", self._unbind_mousewheel)
+  self.grid.bind("<Enter>", self._bind_mousewheel)
+  self.grid.bind("<Leave>", self._unbind_mousewheel)
   self.q.trace_add("write",lambda *_:self.render()); self.render()
+ def _bind_mousewheel(self, event=None):
+  self.r.bind_all("<MouseWheel>", self._on_mousewheel)
+  self.r.bind_all("<Button-4>", self._on_mousewheel_linux)
+  self.r.bind_all("<Button-5>", self._on_mousewheel_linux)
+ def _unbind_mousewheel(self, event=None):
+  self.r.unbind_all("<MouseWheel>")
+  self.r.unbind_all("<Button-4>")
+  self.r.unbind_all("<Button-5>")
+ def _on_mousewheel(self, event):
+  if event.delta:
+   self.can.yview_scroll(int(-event.delta/120), "units")
+ def _on_mousewheel_linux(self, event):
+  self.can.yview_scroll(-1 if event.num == 4 else 1, "units")
  def save(self):
   os.makedirs(os.path.dirname(DATA),exist_ok=True)
   with open(DATA,"w",encoding="utf-8") as f: json.dump(self.apps,f,ensure_ascii=False,indent=2)
@@ -76,6 +94,9 @@ class Launcher:
    for w in (card,icon):
     w.bind("<Button-1>",lambda e,x=a:self.open_app(x))
     w.bind("<Button-3>",lambda e,x=a:self.remove(x))
+    w.bind("<MouseWheel>", self._on_mousewheel)
+   for w in card.winfo_children():
+    w.bind("<MouseWheel>", self._on_mousewheel)
  def open_app(self,a):
   try:
    # In a frozen build, launch a second copy of this EXE in a special mode.

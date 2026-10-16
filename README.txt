@@ -10,3 +10,5 @@ This workflow:
 - Produces dist/GAppsLauncher.exe, artifact GAppsLauncher-Windows.
 
 Requires Microsoft Edge WebView2 Runtime on the Windows PC. Google may restrict embedded sign-in in webview windows.
+
+Google product icons: the app fetches official product favicons from Google-owned service domains on first display and caches them under %APPDATA%\\GAppsLauncher\\icons. Internet access is required the first time; if a favicon cannot load, a letter fallback is shown.
