@@ -1,21 +1,14 @@
-G Apps Launcher — WebView2 edition
+G Apps Launcher — WebView2 edition (dependency fix)
 
-Features:
-- Google-style app grid, search and categories
-- Add custom web apps
-- Left-click a card to open that website in its own app window
-- Right-click a card to remove it
-- App windows run in separate processes so the launcher stays open and multiple app windows can be used
+Fix included: PyInstaller explicitly collects the pywebview package and the Edge Chromium platform module. This addresses "No module named 'webview'" when opening an app.
 
-Build on GitHub:
-1. Upload/commit all project files to your GitHub repository (replace old files).
-2. Open Actions > Build Windows EXE > Run workflow, or push to main/master.
-3. Download the GAppsLauncher-Windows artifact from the completed workflow.
+IMPORTANT: You must rebuild the EXE after replacing these files. The existing EXE cannot repair itself.
 
-Requirements:
-- Windows 10/11
-- Microsoft Edge WebView2 Runtime
-- Google may restrict sign-in or some features inside embedded webviews; this depends on Google's current security policies.
+GitHub steps:
+1. Extract this ZIP.
+2. Upload/replace the files in your repository, especially .github/workflows/build-windows.yml and build_exe.bat.
+3. Commit the changes.
+4. Open GitHub > Actions > Build Windows EXE > Run workflow (or wait for push-triggered build).
+5. Download the new GAppsLauncher-Windows artifact and run the new EXE.
 
-Local build:
-Install Python 3.11, then run build_exe.bat.
+Windows 10/11 and Microsoft Edge WebView2 Runtime may be required. Google may restrict sign-in in embedded webviews.
