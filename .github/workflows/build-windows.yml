@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pywebview pyinstaller pythonnet clr_loader
+          python -m pip install pywebview pyinstaller pythonnet clr_loader pillow
       - name: Verify pywebview installation
         run: python -c "import webview; print('pywebview imported from:', webview.__file__)"
       - name: Build EXE with WebView dependencies
