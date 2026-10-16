@@ -1,0 +1,1 @@
+@echo off\r\npy -3 -m pip install pywebview\r\npy -3 main.py\r\npause\r\n
